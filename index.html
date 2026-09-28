@@ -1,4 +1,8 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="theme-color" content="#4A2C3F"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>دليل مستخدم نظام Glamour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#2B2026;--plum:#4A2C3F;--rose:#B5697A;--rose-soft:#F2E3E4;--nude:#EADFD8;--paper:#FBF8F6;
@@ -150,9 +154,84 @@ footer{background:var(--plum);color:var(--nude);padding:28px 24px;text-align:cen
   .cover{page-break-after:always}
   .pagenum:after{content:counter(page)}
 }
-</style>
-<div dir="rtl" lang="ar">
 
+/* ===== Dynamic layer ===== */
+[hidden].hx{display:none!important}
+#pbar{position:fixed;top:0;left:0;right:0;height:3px;z-index:70;background:linear-gradient(90deg,var(--rose),var(--brass));transform-origin:right center;transform:scaleX(0);pointer-events:none}
+.sbox{position:relative;margin-bottom:12px}
+.sbox input{width:100%;font:inherit;font-size:14.2px;padding:9px 38px 9px 12px;border:1px solid var(--line);border-radius:22px;background:#fff;color:var(--ink);transition:border-color .2s,box-shadow .2s}
+.sbox input:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 3px rgba(181,105,122,.18)}
+.sbox svg{position:absolute;inset-inline-start:auto;right:12px;top:50%;width:16px;height:16px;transform:translateY(-50%);stroke:var(--muted);fill:none;stroke-width:2;pointer-events:none}
+.sbox kbd{position:absolute;left:10px;top:50%;transform:translateY(-50%);font:inherit;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 6px;background:var(--paper)}
+#res{margin-bottom:12px}
+#res .cnt{font-size:12.5px;color:var(--brass);font-family:var(--head);margin:4px 2px 8px}
+#res button{display:block;width:100%;text-align:start;font:inherit;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 11px;margin-bottom:6px;cursor:pointer;line-height:1.55;animation:rin .28s both;animation-delay:calc(var(--i,0)*28ms)}
+#res button:hover,#res button:focus-visible{border-color:var(--rose);background:var(--rose-soft);outline:none}
+#res b{display:block;font-family:var(--head);font-weight:500;font-size:12.5px;color:var(--plum)}
+#res span{display:block;font-size:13px;color:var(--muted)}
+#res mark{background:#F6E2C4;color:var(--ink);border-radius:3px;padding:0 2px}
+nav.toc.searching .lbl,nav.toc.searching button[data-t],nav.toc.searching button.print{display:none}
+@keyframes rin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(181,105,122,.55);background:rgba(181,105,122,.22)}100%{box-shadow:0 0 0 14px rgba(181,105,122,0);background:transparent}}
+.flash{animation:flash 1.7s ease-out;border-radius:8px}
+/* reveal */
+.js .rv{opacity:.001;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+.js .legend li{opacity:.25;transform:translateX(10px);transition:opacity .4s ease,transform .4s ease}
+.js figure.in .legend li{opacity:1;transform:none;transition-delay:calc(var(--i,0)*70ms + 200ms)}
+.js .strip .chip,.js .strip .ar{opacity:0;transform:scale(.85);transition:opacity .35s ease,transform .35s ease}
+.js .strip.in .chip,.js .strip.in .ar{opacity:1;transform:none;transition-delay:calc(var(--i,0)*90ms)}
+.js .cover-in>*{animation:rise .7s both cubic-bezier(.2,.7,.2,1)}
+.js .cover-in>*:nth-child(2){animation-delay:.08s}.js .cover-in>*:nth-child(3){animation-delay:.16s}.js .cover-in>*:nth-child(4){animation-delay:.24s}
+.cover:after{animation:drift 14s ease-in-out infinite alternate}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,-24px) scale(1.08)}}
+/* steps */
+.step{position:relative}
+.step:not(.last)::before{content:"";position:absolute;inset-inline-start:18px;top:42px;bottom:-26px;width:2px;background:var(--rose);opacity:.35;transform:scaleY(0);transform-origin:top;transition:transform .9s ease .2s}
+.js .step.in:not(.last)::before{transform:scaleY(1)}
+.step.done:not(.last)::before{background:#5D8E7B;opacity:.7}
+.num{cursor:pointer;position:relative;z-index:1;transition:background .25s,transform .2s;user-select:none}
+.num:hover{transform:scale(1.08)}
+.num:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.step.done .num{background:#5D8E7B;font-size:0}
+.step.done .num:after{content:"✓";font-size:18px}
+.step.done .sbody h4{color:#5D8E7B}
+.prog{display:inline-block;vertical-align:middle;margin-inline-start:12px;font-family:var(--body);font-size:12.5px;font-weight:500;color:var(--plum);background:var(--nude);border-radius:14px;padding:2px 11px;transition:background .3s,color .3s}
+.prog.full{background:#5D8E7B;color:#fff;animation:pop .5s}
+@keyframes pop{40%{transform:scale(1.18)}}
+/* image zoom */
+main figure img{cursor:zoom-in;transition:box-shadow .25s,transform .25s}
+main figure img:hover{box-shadow:0 8px 26px rgba(43,32,38,.16)}
+#lb{position:fixed;inset:0;z-index:100;background:rgba(28,20,25,.92);display:flex;align-items:center;justify-content:center;flex-direction:column;opacity:0;transition:opacity .25s;padding:54px 12px 64px}
+#lb[hidden]{display:none}
+#lb.open{opacity:1}
+#lb img{max-width:min(1100px,100%);max-height:100%;object-fit:contain;border-radius:8px;background:#fff;transform:scale(.94);transition:transform .3s cubic-bezier(.2,.7,.2,1);cursor:zoom-out}
+#lb.open img{transform:none}
+#lb .cap{position:absolute;bottom:14px;left:16px;right:16px;text-align:center;color:var(--nude);font-size:13.5px}
+#lb button{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;width:44px;height:44px;border-radius:50%;font-size:26px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:background .2s}
+#lb button:hover{background:rgba(255,255,255,.28)}
+#lb button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#lb .lbx{top:10px;right:12px}
+#lb .lbp{top:50%;right:12px;transform:translateY(-50%)}
+#lb .lbn{top:50%;left:12px;transform:translateY(-50%)}
+#lb .cnt{position:absolute;top:22px;left:16px;color:var(--nude);font-size:13px;font-family:var(--head)}
+/* prev/next */
+.pn{display:flex;gap:12px;margin-top:34px}
+.pn button{flex:1;text-align:start;font:inherit;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 16px;cursor:pointer;transition:border-color .2s,transform .2s,background .2s;min-width:0}
+.pn button:hover,.pn button:focus-visible{border-color:var(--rose);background:var(--rose-soft);transform:translateY(-2px);outline:none}
+.pn small{display:block;color:var(--brass);font-family:var(--head);font-size:12px}
+.pn b{font-family:var(--head);font-weight:500;color:var(--plum);font-size:15px}
+.pn .nx{text-align:end}
+#top{position:fixed;left:16px;bottom:16px;z-index:35;width:44px;height:44px;border-radius:50%;border:0;background:var(--plum);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(43,32,38,.3);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .25s,transform .25s}
+#top.show{opacity:1;transform:none;pointer-events:auto}
+#top:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+@media (max-width:920px){.pn{flex-direction:column}#top{bottom:calc(16px + env(safe-area-inset-bottom,0px))}}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}
+.js .rv,.js .legend li,.js .strip .chip,.js .strip .ar{opacity:1!important;transform:none!important}.step:not(.last)::before{transform:scaleY(1)!important}}
+@media print{#pbar,#lb,#top,.pn,.sbox,#res{display:none!important}.js .rv,.js .legend li,.js .strip .chip,.js .strip .ar{opacity:1!important;transform:none!important}.step:not(.last)::before{display:none}.prog{display:none}}
+</style></head>
+<body>
 <header class="cover"><div class="cover-in"><div class="brandmark">G</div>
 <h1>دليل المستخدم — نظام Glamour</h1>
 <div class="sub">فقرات النظام ومسارات العمل</div>
@@ -164,9 +243,11 @@ footer{background:var(--plum);color:var(--nude);padding:28px 24px;text-align:cen
     <span class="bars"></span></button>
   <div class="mtitle">دليل مستخدم Glamour</div>
 </div>
+<div id="pbar" aria-hidden="true"></div>
 <div class="scrim" id="scrim" hidden></div>
 <div class="shell">
-<nav class="toc" id="toc" aria-label="فهرس الدليل"><div class="lbl">ابدأ من هنا</div><button type="button" data-t="idx">فهرس الدليل</button><div class="lbl">الجزء الأول · فقرات النظام</div><button type="button" data-t="g1">1. البداية اليومية</button><button type="button" data-t="g2">2. الزبائن والتواصل</button><button type="button" data-t="g3">3. الحجوزات</button><button type="button" data-t="g4">4. الفريق والصلاحيات</button><button type="button" data-t="g5">5. الفواتير والصناديق</button><button type="button" data-t="g6">6. المحاسبة</button><button type="button" data-t="g7">7. الرواتب والسلف</button><button type="button" data-t="g8">8. المخزن والمشتريات</button><button type="button" data-t="g9">9. الإدارة والتتبّع</button><div class="lbl">الجزء الثاني · مسارات العمل</div><button type="button" data-t="m1">1. الحجز والدفع</button><button type="button" data-t="m2">2. فتح الجلسة وإغلاقها</button><button type="button" data-t="m3">3. إضافة المشتريات</button><button type="button" data-t="m4">4. إضافة القيود</button><button type="button" data-t="m5">5. تدقيق القاصة والأموال</button></nav>
+<nav class="toc" id="toc" aria-label="فهرس الدليل"><div class="lbl">ابدأ من هنا</div><button type="button" data-t="idx">فهرس الدليل</button><div class="lbl">الجزء الأول · فقرات النظام</div><button type="button" data-t="g1">1. البداية اليومية</button><button type="button" data-t="g2">2. الزبائن والتواصل</button><button type="button" data-t="g3">3. الحجوزات</button><button type="button" data-t="g4">4. الفريق والصلاحيات</button><button type="button" data-t="g5">5. الفواتير والصناديق</button><button type="button" data-t="g6">6. المحاسبة</button><button type="button" data-t="g7">7. الرواتب والسلف</button><button type="button" data-t="g8">8. المخزن والمشتريات</button><button type="button" data-t="g9">9. الإدارة والتتبّع</button><div class="lbl">الجزء الثاني · مسارات العمل</div><button type="button" data-t="m1">1. الحجز والدفع</button><button type="button" data-t="m2">2. فتح الجلسة وإغلاقها</button><button type="button" data-t="m3">3. إضافة المشتريات</button><button type="button" data-t="m4">4. إضافة القيود</button><button type="button" data-t="m5">5. تدقيق القاصة والأموال</button>
+<button type="button" class="print" id="printbtn">طباعة / حفظ PDF</button></nav>
 <main><section id="idx"><div class="eyebrow">ابدأ من هنا</div><h2>فهرس الدليل</h2><hr class="rule">
 <p class="lead">ينقسم هذا الدليل إلى جزأين. يعرّفك الجزء الأول بفقرات النظام — ما تعرضه كل شاشة وما يمكن إنجازه فيها. ويسير بك الجزء الثاني في مسارات العمل من أولها إلى آخرها. اضغط أي بند للانتقال إليه.</p>
 <div class="ixwrap">
@@ -465,6 +546,8 @@ footer{background:var(--plum);color:var(--nude);padding:28px 24px;text-align:cen
 <p>الخطوات نفسها، ويختلف تكرارها بحسب الغرض:</p>
 <div class="tablewrap"><table><thead><tr><th>الدورة</th><th>ما يُنجَز</th></tr></thead><tbody><tr><td class="c">يومي</td><td>يحوّل المحاسب حصيلة كاشير الأرضي إلى القاصة الرئيسية، ويراجع حركات اليوم في الدفتر العام</td></tr><tr><td class="c">أسبوعي</td><td>مراجعة الفواتير غير المدفوعة وذمم الزبائن والموردين</td></tr><tr><td class="c">شهري</td><td>مطابقة الفواتير وتصديرها إلى Excel، ثم الأرباح والخسائر والميزانية للشهر</td></tr><tr><td class="c">نصف سنوي وسنوي</td><td>الإقفال نفسه على فترة أطول، وإغلاق السنة المالية في نهايتها</td></tr></tbody></table></div></section></main></div>
 <footer>دليل مستخدم Glamour · مستند داخلي</footer>
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="عرض الصورة"><div class="cnt"></div><button type="button" class="lbx" aria-label="إغلاق">×</button><button type="button" class="lbp" aria-label="الصورة السابقة">›</button><button type="button" class="lbn" aria-label="الصورة التالية">‹</button><img alt=""><div class="cap"></div></div>
+<button type="button" id="top" aria-label="العودة للأعلى">↑</button>
 <script>
 try{
 var mq=window.matchMedia('(max-width:920px)');
@@ -510,6 +593,100 @@ window.addEventListener('beforeprint',function(){
   [].slice.call(document.images).forEach(function(i){i.loading='eager';});
 });
 }catch(e){}
+</script><script>
+(function(){try{
+var D=document,B=D.body,reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+D.documentElement.classList.add('js');
+function $(s,r){return (r||D).querySelector(s)} function $$(s,r){return [].slice.call((r||D).querySelectorAll(s))}
+var main=$('main');
+/* mobile bar shows current section */
+var mt=$('.mtitle');
+/* progress bar + back to top */
+var pbar=$('#pbar'),topb=$('#top'),tick=false;
+function onScroll(){tick=false;var h=D.documentElement.scrollHeight-innerHeight,p=h>0?Math.min(1,Math.max(0,scrollY/h)):0;
+ pbar.style.transform='scaleX('+p+')';topb.classList.toggle('show',scrollY>700);}
+addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(onScroll)}},{passive:true});onScroll();
+topb.addEventListener('click',function(){scrollTo({top:0,behavior:reduce?'auto':'smooth'})});
+/* reveal on scroll */
+var rvSel='main figure,main .step,main .card,main .note,main .warn,main .tip,main .tablewrap,main .strip,main .ixwrap .ix,main h3';
+var rvEls=$$(rvSel);
+rvEls.forEach(function(e,i){e.classList.add('rv')});
+$$('.legend').forEach(function(l){$$('li',l).forEach(function(li,i){li.style.setProperty('--i',i)})});
+$$('.strip').forEach(function(s){$$('.chip,.ar',s).forEach(function(c,i){c.style.setProperty('--i',i)})});
+function show(e){e.classList.add('in')}
+if('IntersectionObserver' in window&&!reduce){
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){show(e.target);io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px',threshold:.06});
+ rvEls.forEach(function(e){io.observe(e)});
+ setTimeout(function(){rvEls.forEach(function(e){var r=e.getBoundingClientRect();if(r.top<innerHeight)show(e)})},1200);
+}else rvEls.forEach(show);
+/* steps: connectors + checklist */
+var steps=$$('main .step');
+steps.forEach(function(s,i){var n=s.nextElementSibling;if(!(n&&n.classList.contains('step')))s.classList.add('last')});
+var store={};try{store=JSON.parse(localStorage.getItem('glamour-steps')||'{}')}catch(e){}
+function save(){try{localStorage.setItem('glamour-steps',JSON.stringify(store))}catch(e){}}
+var secProg={};
+$$('main section').forEach(function(sec){var st=$$('.step',sec);if(!st.length)return;
+ var h=$('h2',sec),pill=D.createElement('span');pill.className='prog';h.appendChild(pill);secProg[sec.id]={pill:pill,steps:st};});
+function updProg(id){var o=secProg[id],d=o.steps.filter(function(s){return s.classList.contains('done')}).length;
+ var full=d===o.steps.length;o.pill.classList.toggle('full',full);o.pill.textContent=full?'✓ اكتمل المسار':d+' / '+o.steps.length+' خطوات';}
+steps.forEach(function(s,i){var num=$('.num',s),sec=s.closest('section'),key=sec.id+':'+i;
+ num.setAttribute('role','button');num.setAttribute('tabindex','0');num.setAttribute('title','علّم الخطوة كمنجَزة');
+ num.setAttribute('aria-pressed',store[key]?'true':'false');if(store[key])s.classList.add('done');
+ function tg(){var on=!s.classList.contains('done');s.classList.toggle('done',on);num.setAttribute('aria-pressed',on);if(on)store[key]=1;else delete store[key];save();updProg(sec.id)}
+ num.addEventListener('click',tg);num.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();tg()}});});
+Object.keys(secProg).forEach(updProg);
+/* prev / next */
+var order=$$('nav.toc button[data-t]').filter(function(b){return b.dataset.t!=='idx'});
+order.forEach(function(b,i){var sec=D.getElementById(b.dataset.t);if(!sec)return;var w=D.createElement('div');w.className='pn';
+ function mk(t,cls,lab){var x=D.createElement('button');x.type='button';x.className=cls;x.innerHTML='<small></small><b></b>';$('small',x).textContent=lab;$('b',x).textContent=t.textContent.replace(/^\d+\.\s*/,'');
+  x.addEventListener('click',function(){go(D.getElementById(t.dataset.t))});return x}
+ if(order[i-1])w.appendChild(mk(order[i-1],'pv','→ السابق'));else{var sp=D.createElement('span');sp.style.flex='1';w.appendChild(sp)}
+ if(order[i+1])w.appendChild(mk(order[i+1],'nx','التالي ←'));sec.appendChild(w)});
+function go(el){if(el)el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
+/* current section in mobile bar */
+var secs=$$('main section[id]'),lastId='';
+var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.target.id!==lastId){lastId=e.target.id;var h=$('h2',e.target);if(h&&mt)mt.textContent=h.firstChild.textContent.trim()}})},{rootMargin:'-8% 0px -80% 0px'});
+secs.forEach(function(s){so.observe(s)});
+/* search */
+function nzm(t){var n='',map=[];for(var i=0;i<t.length;i++){var c=nz(t[i]);if(c){n+=c;for(var k=0;k<c.length;k++)map.push(i)}}return{n:n,map:map}}
+function nz(s){return s.replace(/[ً-ٰٟـ]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase()}
+var nav=$('#toc'),first=$('.lbl',nav);
+var box=D.createElement('div');box.className='sbox';
+box.innerHTML='<input id="q" type="search" autocomplete="off" placeholder="ابحث في الدليل…" aria-label="ابحث في الدليل"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>';
+var res=D.createElement('div');res.id='res';res.hidden=true;res.setAttribute('aria-live','polite');
+nav.insertBefore(res,nav.firstChild);nav.insertBefore(box,nav.firstChild);
+var q=$('#q'),idx=[];
+$$('main section:not(#idx) :is(h2,h3,h4,p,li,figcaption,td,.ct)').forEach(function(e){var t=e.textContent.replace(/\s+/g,' ').trim();if(t.length>2){
+ var sec=e.closest('section'),h3=null,n=e;while(n&&n!==sec){var p=n.previousElementSibling;while(p){if(p.tagName==='H3'){h3=p;break}p=p.previousElementSibling}if(h3)break;n=n.parentElement}
+ var s2=$('h2',sec);var mm=nzm(t);idx.push({el:e,t:t,n:mm.n,map:mm.map,sec:s2?s2.firstChild.textContent.trim():'',sub:h3?h3.textContent.trim():''})}});
+var timer;
+function run(){var v=nz(q.value.trim());res.textContent='';
+ if(v.length<2){res.hidden=true;nav.classList.remove('searching');return}
+ var toks=v.split(/\s+/).filter(Boolean),hits=[];
+ for(var i=0;i<idx.length&&hits.length<25;i++){var it=idx[i],ok=toks.every(function(t){return it.n.indexOf(t)>-1});if(ok)hits.push(it)}
+ nav.classList.add('searching');res.hidden=false;
+ var c=D.createElement('div');c.className='cnt';c.textContent=hits.length?hits.length+' نتيجة':'لا توجد نتائج لـ «'+q.value.trim()+'»';res.appendChild(c);
+ hits.forEach(function(it,i){var b=D.createElement('button');b.type='button';b.style.setProperty('--i',i);
+  var h=D.createElement('b');h.textContent=it.sec+(it.sub&&it.sub!==it.sec?' › '+it.sub:'');b.appendChild(h);
+  var sp=D.createElement('span'),p=it.n.indexOf(toks[0]),rs=it.map[p],re=it.map[p+toks[0].length-1]+1,s=Math.max(0,rs-28),e=Math.min(it.t.length,re+52);
+  sp.appendChild(D.createTextNode((s>0?'…':'')+it.t.slice(s,rs)));var m=D.createElement('mark');m.textContent=it.t.slice(rs,re);sp.appendChild(m);
+  sp.appendChild(D.createTextNode(it.t.slice(re,e)+(e<it.t.length?'…':'')));b.appendChild(sp);
+  b.addEventListener('click',function(){B.classList.remove('navopen');B.style.overflow='';
+   setTimeout(function(){it.el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});it.el.classList.remove('flash');void it.el.offsetWidth;it.el.classList.add('flash')},200)});
+  res.appendChild(b)})}
+q.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(run,120)});
+q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';run();q.blur()}});
+D.addEventListener('keydown',function(e){var t=e.target&&e.target.tagName;if(e.key==='/'&&t!=='INPUT'&&t!=='TEXTAREA'){e.preventDefault();if(matchMedia('(max-width:920px)').matches){$('#mopen').click()}q.focus()}});
+/* lightbox */
+var imgs=$$('main figure img'),lb=$('#lb'),lbi=$('img',lb),lbc=$('.cap',lb),lbn=$('.cnt',lb),cur=0,prevFocus=null;
+function fill(i){cur=(i+imgs.length)%imgs.length;var im=imgs[cur];lbi.src=im.src;lbi.alt=im.alt;var f=im.closest('figure'),fc=f&&$('figcaption',f);lbc.textContent=fc?fc.textContent:im.alt;lbn.textContent=(cur+1)+' / '+imgs.length}
+function open(i){prevFocus=D.activeElement;fill(i);lb.hidden=false;B.style.overflow='hidden';requestAnimationFrame(function(){lb.classList.add('open')});$('.lbx',lb).focus()}
+function close(){lb.classList.remove('open');B.style.overflow='';setTimeout(function(){lb.hidden=true},reduce?0:250);if(prevFocus&&prevFocus.focus)prevFocus.focus()}
+imgs.forEach(function(im,i){im.addEventListener('click',function(){open(i)})});
+$('.lbx',lb).addEventListener('click',close);lbi.addEventListener('click',close);
+$('.lbn',lb).addEventListener('click',function(){fill(cur+1)});$('.lbp',lb).addEventListener('click',function(){fill(cur-1)});
+lb.addEventListener('click',function(e){if(e.target===lb)close()});
+D.addEventListener('keydown',function(e){if(lb.hidden)return;if(e.key==='Escape')close();else if(e.key==='ArrowLeft')fill(cur+1);else if(e.key==='ArrowRight')fill(cur-1)});
+}catch(err){D.documentElement.classList.remove('js');if(window.console)console.error(err)}})();
 </script>
-</div>
-<script>try{document.documentElement.dir="rtl";document.documentElement.lang="ar"}catch(e){}</script>
+</body></html>
